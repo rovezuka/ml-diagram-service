@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Result</title>
+  <style>
+    body { font-family: -apple-system, Arial, sans-serif; margin: 24px; }
+    .row { display:flex; gap: 24px; align-items:flex-start; }
+    .col { width: 100%; }
+    pre { background: #f7f7f7; padding: 12px; border-radius: 8px; overflow:auto; }
+    .card { border: 1px solid #ddd; padding: 16px; border-radius: 10px; margin-bottom: 16px; }
+    .muted { color:#666; font-size:14px; }
+    a { color:#0b65c2; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <a href="/ui">← назад</a>
+  <h2>Результат: {{ raw.meta.filename }}</h2>
+  <p class="muted">latency: {{ raw.meta.latency_ms }} ms • engine: {{ raw.meta.engine }}</p>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h3>Текстовый алгоритм (наша нормализация)</h3>
+        <pre>{{ raw.algorithm_text }}</pre>
+      </div>
+
+      {% if raw.llm_text %}
+      <div class="card">
+        <h3>Текстовый алгоритм (LLM refine)</h3>
+        <pre>{{ raw.llm_text }}</pre>
+        <p class="muted">{{ raw.llm.notes }}</p>
+      </div>
+      {% endif %}
+
+      {% if raw.llm_error %}
+      <div class="card">
+        <h3>LLM ошибка</h3>
+        <pre>{{ raw.llm_error }}</pre>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col">
+      {% if raw.extras and raw.extras.swimlanes %}
+      <div class="card">
+        <h3>Swimlanes</h3>
+        <pre>{% for s in raw.extras.swimlanes %}{{ s.id }}: {{ s.name }} ({{ s.y_top }}-{{ s.y_bottom }})\n{% endfor %}</pre>
+      </div>
+      {% endif %}
+
+      <div class="card">
+        <h3>JSON (как в API)</h3>
+        <pre>{{ raw_json }}</pre>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
