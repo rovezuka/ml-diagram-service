@@ -1,4 +1,0 @@
-# Optional heavy deps for YOLO BPMN detection (engine=yolo_bpmn)
-ultralytics==8.1.11
-torch>=2.6.0
-torchvision>=0.25.0

@@ -9,27 +9,12 @@
 - **LLM (опционально)** для улучшения текста/ролей
 - **UI** `/ui` для загрузки файла и получения 2 ответов
 
-## Установка (macOS)
+## Запуск
+### Сборка образа
+`docker build -t diagram-parser .`
 
-### 1) Tesseract (+ языки)
-```bash
-brew install tesseract tesseract-lang
-tesseract --list-langs
-```
-
-### 2) venv
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements-macos.txt
-```
-
-### 3) Запуск
-```bash
-export TESS_LANG=rus+eng
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8080
-```
+### Запуск контейнера
+`docker run -p 8000:8000 diagram-parser`
 
 Swagger: http://localhost:8080/docs  
 UI: http://localhost:8080/ui
@@ -41,7 +26,7 @@ UI: http://localhost:8080/ui
 - `POST /v1/evaluate` — несколько изображений + `ground_truth.txt` → метрики
 - `POST /v1/render` — (доп.) текст → mermaid (упрощённо)
 
-## Текстовый формат (пример как в эталонах)
+## Текстовый формат 
 ```
 Шаг | Роль
 1. Создание запроса | Инициатор
