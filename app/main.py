@@ -131,7 +131,7 @@ def render(req: RenderRequest):
 
 
 @app.post("/v1/evaluate")
-async def evaluate(files: List[UploadFile] = File(...), ground_truth: UploadFile = File(...), engine: str = "yolo_bpmn"):
+async def evaluate(files: List[UploadFile] = File(...), ground_truth: UploadFile = File(...), engine: str = "cv"):
     if not (ground_truth.filename or "").lower().endswith(".txt"):
         raise HTTPException(status_code=400, detail="ground_truth must be .txt")
 
